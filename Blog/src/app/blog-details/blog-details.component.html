@@ -56,7 +56,7 @@
     <button kendoButton [look]="'outline'" [primary]="true" (click)="close()">
       Cancel
     </button>
-    <button kendoButton [primary]="true" (click)="saveBlog(blogForm.value)">
+    <button kendoButton [primary]="true" [disabled]="disabled" (click)="saveBlog(blogForm.value)">
       Save
     </button>
   </div>

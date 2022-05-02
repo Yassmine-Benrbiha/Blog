@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationService } from '@progress/kendo-angular-notification';
 import { BlogService } from '../blog.service';
 
 @Component({
@@ -14,41 +15,61 @@ export class BlogListComponent implements OnInit {
   downvotes: number = 0;
   condition: boolean = false;
 
-  constructor(private blogsService: BlogService, private router: Router) {}
+  constructor(private blogsService: BlogService, private router: Router, private notificationService: NotificationService,) {
+  }
 
   ngOnInit(): void {
-    this.blogsService.getData().subscribe((res) => {
-      this.dataSource = res as [];
+    this.getData();
+
+  }
+
+  getData()
+  {
+    this.blogsService.getData().subscribe((res: any) => {
+      this.dataSource = res.data[0] as [];
       this.dataSource.forEach((element: any) => {
         element.upvotes = 0;
         element.downvotes = 0;
       });
+      if(res.code == "200"){
+        this.notificationService.show({
+          content: res.message,
+          animation: { type: 'slide', duration: 400 },
+          position: { horizontal: 'center', vertical: 'top' },
+          type: { style: 'success', icon: true }
+        });
+      }
+      else{        
+        this.notificationService.show({
+        content: res.message,
+        animation: { type: 'slide', duration: 400 },
+        position: { horizontal: 'center', vertical: 'top' },
+        type: { style: 'error', icon: true }
+      });
+    }
     });
   }
 
-  bgId: string = '';
-  openDetails(id: any): void {
+
+  openDetails(id: any,upvotes =0,downvotes= 0): void {
     console.log(id)
-    //this.router.navigate([`/preview/${id}`]);
-   this.bgId = id;
-    this.isDetailsOpened = true;
-    let index = this.dataSource.findIndex((el: any) => el.bgId == id );
-    let blog = this.dataSource[index] as any;
-    if (blog.downvotes !== 0 && blog.upvotes / blog.downvotes > 1)
-      this.condition = true;
-    else this.condition = false;
-    console.log(this.condition);
+    if (id!== null) {
+      let ratio = true ? upvotes > downvotes :false;
+      this.router.navigate([`/preview/${id}/${ratio}`]);
+    }
+
+    if (id == null) this.isDetailsOpened = true;
   }
 
   upvote(id: string) {
     this.dataSource.forEach((element: any) => {
-      if (element.bgId == id) element.upvotes++;
+      if (element.id == id) element.upvotes++;
     });
   }
 
   downvote(id: string) {
     this.dataSource.forEach((element: any) => {
-      if (element.bgId == id) element.downvotes++;
+      if (element.id == id) element.downvotes++;
     });
   }
 

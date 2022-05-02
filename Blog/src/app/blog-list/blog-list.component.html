@@ -12,20 +12,18 @@
     <kendo-grid-column field="title" title="Title"></kendo-grid-column>
     <kendo-grid-column field="content" title="Content"></kendo-grid-column>
     <kendo-grid-column field="author" title="Author"></kendo-grid-column>
-
     <kendo-grid-command-column title="Actions">
       <ng-template kendoGridCellTemplate let-dataItem>
-        <button kendoButton [icon]="'plus'" (click)="upvote(dataItem.bgId)">
+        <button
+        kendoButton
+        (click)="openDetails(dataItem.id,dataItem.upvotes,dataItem.downvotes)"
+      ><a>continue reading >></a></button>
+        <button kendoButton [icon]="'plus'" (click)="upvote(dataItem.id)">
           {{ dataItem.upvotes }}
         </button>
-        <button kendoButton [icon]="'minus'" (click)="downvote(dataItem.bgId)">
+        <button kendoButton [icon]="'minus'" (click)="downvote(dataItem.id)">
           {{ dataItem.downvotes }}
         </button>
-        <button
-          kendoButton
-          [icon]="'eye'"
-          (click)="openDetails(dataItem.bgId)"
-        ></button>
       </ng-template>
     </kendo-grid-command-column>
 
@@ -52,7 +50,6 @@
       <span>Blog Detail</span>
     </kendo-window-titlebar>
     <app-blog-details
-      [bgId]="bgId"
       (cancel)="close()"
       (save)="save($event)"
     ></app-blog-details>

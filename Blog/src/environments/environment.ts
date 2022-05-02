@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  fastapi:"http://127.0.0.1:8000"
+  fastapi:"http://localhost:7000/blog"
 };
 
 /*

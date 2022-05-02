@@ -10,7 +10,7 @@ export const routes: Routes = [
     component: BlogListComponent
   },
   {
-    path: "preview/:id",
+    path: "preview/:id/:ratio",
     component: BlogPreviewComponent
   }
 ];

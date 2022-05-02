@@ -13,15 +13,20 @@ export class BlogService {
 
   private generateHeaders() {
     return {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Cache-Control': 'no-cache',
-        'Access-Control-Allow-Origin': '*' }),
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Cache-Control': 'no-cache'}),
     };
   }
 
-
-
-  public getData(id?: string) {
-    if(id) return this.httpClient.get( this.fastApi+'/blogs/'+`${id}`, this.generateHeaders());
+  public getData(id?: any) {
+    if(id) return this.httpClient.get( this.fastApi+`/${id}`, this.generateHeaders());
     return this.httpClient.get( this.fastApi, this.generateHeaders());
   }
+  
+  public create(body:any) {
+    return this.httpClient.post(
+        this.fastApi,
+        body,
+        this.generateHeaders()
+    );
+}
 }
