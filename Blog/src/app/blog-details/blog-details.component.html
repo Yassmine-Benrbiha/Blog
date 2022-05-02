@@ -1,0 +1,63 @@
+<div class="window-container">
+  <div *ngIf="!dislpayDetails" class="k-i-loading"></div>
+  <ng-container *ngIf="dislpayDetails">
+    <form class="k-form" novalidate [formGroup]="blogForm">
+      <div class="container">
+        <div class="content">
+          <div class="block-content">
+            <kendo-formfield [showErrors]="'initial'">
+              <kendo-label
+                [for]="title"
+                text="Title"
+                style="font-size: 12pt"
+              ></kendo-label>
+              <input
+                kendoTextBox
+                #title
+                [formControlName]="'title'"
+                [style.width]="'600px'"
+              />
+            </kendo-formfield>
+
+            <kendo-formfield [showErrors]="'initial'">
+              <kendo-label
+                [for]="author"
+                text="Author"
+                style="font-size: 12pt"
+              ></kendo-label>
+              <input
+                kendoTextBox
+                #author
+                [formControlName]="'author'"
+                [style.width]="'600px'"
+              />
+            </kendo-formfield>
+            <kendo-formfield [showErrors]="'initial'">
+              <kendo-label
+                [for]="content"
+                text="Content"
+                style="font-size: 12pt"
+              ></kendo-label>
+              <textarea
+                kendoTextArea
+                #content
+                [formControlName]="'content'"
+                [style.width]="'600px'"
+                rows="12"
+              ></textarea>
+            </kendo-formfield>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <div class="window-action">
+    <button kendoButton [look]="'outline'" [primary]="true" (click)="close()">
+      Cancel
+    </button>
+    <button kendoButton [primary]="true" (click)="saveBlog(blogForm.value)">
+      Save
+    </button>
+  </div>
+</div>

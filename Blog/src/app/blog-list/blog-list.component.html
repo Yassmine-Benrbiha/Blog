@@ -1,0 +1,60 @@
+<div class="content">
+  <legend style="text-align: left; font-size: 18pt; font-weight: bold; margin-bottom: 10px;">
+    Blog List
+  </legend>
+  <kendo-grid
+    [kendoGridBinding]="dataSource"
+    [pageable]="true"
+    [sortable]="true"
+    [filterable]="true"
+    [pageSize]="10"
+  >
+    <kendo-grid-column field="title" title="Title"></kendo-grid-column>
+    <kendo-grid-column field="content" title="Content"></kendo-grid-column>
+    <kendo-grid-column field="author" title="Author"></kendo-grid-column>
+
+    <kendo-grid-command-column title="Actions">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <button kendoButton [icon]="'plus'" (click)="upvote(dataItem.bgId)">
+          {{ dataItem.upvotes }}
+        </button>
+        <button kendoButton [icon]="'minus'" (click)="downvote(dataItem.bgId)">
+          {{ dataItem.downvotes }}
+        </button>
+        <button
+          kendoButton
+          [icon]="'eye'"
+          (click)="openDetails(dataItem.bgId)"
+        ></button>
+      </ng-template>
+    </kendo-grid-command-column>
+
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoButton (click)="openDetails(null)" [icon]="'plus'">
+        Add
+      </button>
+    </ng-template>
+  </kendo-grid>
+</div>
+
+<ng-container>
+  <kendo-window
+    *ngIf="isDetailsOpened"
+    title="Blog Details"
+    [draggable]="false"
+    [resizable]="false"
+    [width]="700"
+  >
+    <kendo-window-titlebar *ngIf="condition" data-status="true">
+      <span>Blog Detail</span>
+    </kendo-window-titlebar>
+    <kendo-window-titlebar *ngIf="!condition" data-status="false">
+      <span>Blog Detail</span>
+    </kendo-window-titlebar>
+    <app-blog-details
+      [bgId]="bgId"
+      (cancel)="close()"
+      (save)="save($event)"
+    ></app-blog-details>
+  </kendo-window>
+</ng-container>

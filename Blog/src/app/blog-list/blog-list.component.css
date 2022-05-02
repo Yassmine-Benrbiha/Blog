@@ -1,0 +1,22 @@
+.content {
+  padding: 10px;
+  position: fixed;
+}
+
+kendo-window {
+  width: calc(100% - 48px);
+  height: calc(100vh - 90px);
+  border-radius: 2px;
+  top: 14px;
+  left: 18px;
+}
+
+[data-status="true"] {
+  color: #f6f6f8 !important;
+  background-color: #862121 !important; 
+}
+
+[data-status="false"] {
+  color: #f6f6f8 !important;
+  background-color: #707070 !important;
+}
