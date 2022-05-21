@@ -3,7 +3,7 @@ import os
 import motor.motor_asyncio
 from bson.objectid import ObjectId
 
-client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://yassmine:RXl8ui3LBKSvaJHq@cluster0.kbrt9.mongodb.net/blogsDB?retryWrites=true&w=majority")
+client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://<username>:<password>@<url>/<db>?retryWrites=true&w=majority")
 database = client.blogsDB
 blog_collection = database.get_collection("blogs")
 
